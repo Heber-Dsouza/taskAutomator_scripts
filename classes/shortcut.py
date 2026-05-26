@@ -25,3 +25,15 @@ class Shortcut:
         """
         kboard.sleep(delay)
         kboard.shortcut(Keyboard.KEYS['win'], Keyboard.KEYS['t'])
+
+    @staticmethod
+    def lx_close(delay: float | int = 0):
+        """Close current window
+
+        Args:
+          delay (float | int, optional): Time to wait before performing the shortcut. Defaults to 0.
+        Returns:
+          None
+        """
+        kboard.sleep(delay)
+        kboard.shortcut(Keyboard.KEYS['alt'], Keyboard.KEYS['f4'])
