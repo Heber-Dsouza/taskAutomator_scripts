@@ -7,7 +7,6 @@ class Calculator(Application):
         super().__init__("gnome-calculator")
 
     def sum(self, x:int, y:int):
-        if not self.is_active_window():
-            self.run()
+        self.open()
         Keyboard.type(f"{x}+{y}", 2)
         Keyboard.confirm()

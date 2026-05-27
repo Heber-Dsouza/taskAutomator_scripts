@@ -21,6 +21,8 @@ class Application(Gnome):
         return self._is_active_window_global() and self.id in self.running_stack and self.running_stack[0] == self.id
 
     def open(self):
+        if not self.is_running():
+            self.run()
         if not self.is_active_window():
             self.__relocate_to_active()
 
@@ -28,7 +30,7 @@ class Application(Gnome):
         return self.id in self.running_stack
 
     def __relocate_to_active(self) -> None:
-        if not self._is_running_global():
+        if not self._is_running_global(self.global_id):
             self._active_global()
         current_item_index = self.running_stack.index(self.id)
         Shortcut.lx_cycle_app_windows(current_item_index, 2)

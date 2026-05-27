@@ -12,7 +12,7 @@ class Gnome:
 
     def _launch(self, global_id):
 
-        if self._is_running_global():
+        if self._is_running_global(global_id):
             self._active_global()
         else:
             Terminal.quick_launch(
@@ -28,8 +28,8 @@ class Gnome:
     def _is_active_window_global(self) -> bool:
         return self.global_id in self.global_running_stack and self.global_running_stack[0] == self.global_id
 
-    def _is_running_global(self) -> bool:
-        return self.global_id in self.global_running_stack
+    def _is_running_global(self, global_id:str) -> bool:
+        return global_id in self.global_running_stack
 
     def __relocate_to_active_global(self) -> None:
         current_index = self.global_running_stack.index(self.global_id)
