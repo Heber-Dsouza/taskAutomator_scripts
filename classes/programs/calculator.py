@@ -4,7 +4,7 @@ from classes.core.keyboard import Keyboard
 
 class Calculator(Application):
     def __init__(self):
-        super().__init__("nohup gnome-calculator & exit")
+        super().__init__("gnome-calculator")
 
     def sum(self, x:int, y:int):
         if not self.is_active_window():

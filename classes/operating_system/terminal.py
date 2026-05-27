@@ -1,8 +1,31 @@
+from enum import Enum
 from classes.core.keyboard import Keyboard
 from classes.operating_system.shortcut import Shortcut
 from models.detailed_delays import DetailedDelays
 
+class LaunchOperationTypes(Enum):
+    NORMAL = "NORMAL"
+    BACKGROUND = "BACKGROUND"
+    NOHUP = "NOHUP"
+    DISOWN = "DISOWN"
+
 class Terminal:
+    @staticmethod
+    def __handle_exec_format(launch_command:str, operation_type:LaunchOperationTypes, instant_exit:bool=True)->str:
+        result = ""
+        match operation_type:
+            case operation_type.BACKGROUND:
+                result += f"{launch_command} &{" exit" if instant_exit else ""}"
+            case operation_type.NOHUP:
+                result += f"nohup {launch_command} &{" exit" if instant_exit else ""}"
+            case operation_type.DISOWN:
+                result += f"{launch_command} & disown{" & exit" if instant_exit else ""}"
+            case _:
+                result = launch_command
+        return result
+
+
+
     @staticmethod
     def quick_launch(
             launch_command:str,
@@ -12,7 +35,10 @@ class Terminal:
 
         try:
             Shortcut.lx_terminal(getattr(detailed_delays, "delay_terminal", delay or 0))
-            Keyboard.type(launch_command, getattr(detailed_delays, "delay_typing", delay or 0))
+            Keyboard.type(Terminal.__handle_exec_format(
+                launch_command,
+                LaunchOperationTypes.NOHUP
+            ), getattr(detailed_delays, "delay_typing", delay or 0))
             Keyboard.confirm(getattr(detailed_delays, "delay_confirm", delay or 0))
             return True
         except Exception as error:
