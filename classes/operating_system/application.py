@@ -4,15 +4,13 @@ from classes.operating_system.shortcut import Shortcut
 
 class Application(Gnome):
 
-    #def __init_subclass__(cls):
-        #cls.global_id = str(uuid.uuid4())
-        #cls.running_stack = []
+    def __init_subclass__(cls):
+        cls.global_id = str(uuid.uuid4())
+        cls.running_stack = []
 
-    def __init__(self, launch_command:str, global_id:str, running_stack:list[str]):
+    def __init__(self, launch_command:str):
         super().__init__(launch_command)
         self.id = str(uuid.uuid4())
-        self.global_id = global_id
-        self.running_stack = running_stack
 
     def run(self):
 
