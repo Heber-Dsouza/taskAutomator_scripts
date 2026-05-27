@@ -51,3 +51,17 @@ class Shortcut:
         kboard.sleep(delay)
         with kboard.hold(Keyboard.KEYS['alt']):
             kboard.press(Keyboard.KEYS["'"], cycles, 1)
+
+    @staticmethod
+    def lx_cycle_windows(cycles:int=1, delay:float|int=0):
+        """Switch between windows
+
+        Args:
+          cycles (int, optional): Number of cycles in the app windows. Defaults to 1.
+          delay (float | int, optional): Time to wait before performing the shortcut. Defaults to 0.
+        Returns:
+          None
+        """
+        kboard.sleep(delay)
+        with kboard.hold(Keyboard.KEYS['alt']):
+            kboard.press(Keyboard.KEYS["tab"], cycles, 1)
