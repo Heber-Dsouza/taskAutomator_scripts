@@ -1,5 +1,5 @@
-from classes.keyboard import Keyboard
-from classes.shortcut import Shortcut
+from classes.core.keyboard import Keyboard
+from classes.operating_system.shortcut import Shortcut
 from models.detailed_delays import DetailedDelays
 
 class Terminal:

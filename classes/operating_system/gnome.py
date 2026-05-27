@@ -1,6 +1,6 @@
 import uuid
-from classes.shortcut import Shortcut
-from classes.programs.terminal import Terminal
+from classes.operating_system.shortcut import Shortcut
+from classes.operating_system.terminal import Terminal
 from models.detailed_delays import DetailedDelays
 
 class Gnome:

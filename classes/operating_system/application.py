@@ -1,6 +1,6 @@
 import uuid
-from classes.programs.gnome import Gnome
-from classes.shortcut import Shortcut
+from classes.operating_system.gnome import Gnome
+from classes.operating_system.shortcut import Shortcut
 
 class Application(Gnome):
     running_stack: list[str] = []

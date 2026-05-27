@@ -1,5 +1,5 @@
-from classes.mouse import Mouse
-from classes.keyboard import Keyboard
+from classes.core.mouse import Mouse
+from classes.core.keyboard import Keyboard
 
 def init():
     Mouse.left_click(2395, 1052)

@@ -1,5 +1,5 @@
 import pyautogui as kboard
-from classes.keyboard import Keyboard
+from classes.core.keyboard import Keyboard
 
 class Shortcut:
     @staticmethod
