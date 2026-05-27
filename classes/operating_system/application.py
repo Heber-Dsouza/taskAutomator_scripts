@@ -3,11 +3,16 @@ from classes.operating_system.gnome import Gnome
 from classes.operating_system.shortcut import Shortcut
 
 class Application(Gnome):
-    running_stack: list[str] = []
 
-    def __init__(self, launch_command:str):
+    #def __init_subclass__(cls):
+        #cls.global_id = str(uuid.uuid4())
+        #cls.running_stack = []
+
+    def __init__(self, launch_command:str, global_id:str, running_stack:list[str]):
         super().__init__(launch_command)
         self.id = str(uuid.uuid4())
+        self.global_id = global_id
+        self.running_stack = running_stack
 
     def run(self):
 
@@ -18,7 +23,7 @@ class Application(Gnome):
             self.running_stack.insert(0, self.id)
 
     def is_active_window(self) -> bool:
-        return self._is_active_window_global() and self.id in self.running_stack and self.running_stack[0] == self.id
+        return self._is_active_window_global(self.global_id) and self.id in self.running_stack and self.running_stack[0] == self.id
 
     def open(self):
         if not self.is_running():
@@ -30,8 +35,8 @@ class Application(Gnome):
         return self.id in self.running_stack
 
     def __relocate_to_active(self) -> None:
-        if not self._is_running_global(self.global_id):
-            self._active_global()
+        self._active_global(self.global_id)
         current_item_index = self.running_stack.index(self.id)
-        Shortcut.lx_cycle_app_windows(current_item_index, 2)
-        self.running_stack.insert(0, self.running_stack.pop(current_item_index))
+        if current_item_index > 0:
+            Shortcut.lx_cycle_app_windows(current_item_index, 2)
+            self.running_stack.insert(0, self.running_stack.pop(current_item_index))
