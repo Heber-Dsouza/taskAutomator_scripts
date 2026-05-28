@@ -1,6 +1,6 @@
 from classes.operating_system.shortcut import Shortcut
 from classes.operating_system.terminal import Terminal
-from models.detailed_delays import DetailedDelays
+from models.IN.detailed_delays import DetailedDelays
 
 class Gnome:
     global_running_stack: list[str] = []

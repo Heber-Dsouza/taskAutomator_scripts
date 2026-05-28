@@ -1,5 +1,8 @@
 import pyautogui as mouse
+from typing import Final
 from classes.core.sound import Sound, LaunchOperationTypes
+from models.IN.beep_setting import BeepSetting
+from classes.utils.numeric_match import NumericMatch
 
 class Mouse:
     @staticmethod
@@ -43,19 +46,19 @@ class Mouse:
         mouse.moveTo(x, y, duration)
 
     @staticmethod
-    def get_position(wait_time:float|int, play_sound:bool=False) -> mouse.Point:
+    def get_position(wait_time:float|int, play_sound:bool=False, beep_settings:BeepSetting|None=None) -> mouse.Point:
         """
         Performs a left click.
 
         Args:
-           wait_time (float | int): Time to wait before getting the current cursor position.
-           play_sound (bool, optional): Whether to play a sound before capturing the cursor position.
-            Defaults to False.
+            wait_time (float | int): Time to wait before getting the current cursor position.
+            play_sound (bool, optional): Whether to play a sound before capturing the cursor position.
+                Defaults to False.
+            beep_settings (BeepSetting, optional): customize beep frequency and quantity. Defaults to None.
+
         Returns:
             None
         """
-
-        #todo: improvements: number of beeps
 
         if not play_sound:
             mouse.sleep(wait_time)
@@ -63,20 +66,40 @@ class Mouse:
             print(position)
             return position
 
-        preparation_time = wait_time * 0.3
+        default_beep_quantity:Final = 3
+        default_beep_frequency:Final = 0.3
+        default_max_beep_quantity:Final = 5
+        default_min_frequency:Final = 0.1
+        default_max_frequency:Final = 1.0
+
+        quantity: int = (
+            beep_settings.quantity % default_max_beep_quantity
+            if (
+                    beep_settings
+                    and beep_settings.quantity
+            )
+            else default_beep_quantity
+        )
+        frequency: float | int = (
+            NumericMatch.is_in_range(
+                default_min_frequency,
+                default_max_frequency,
+                beep_settings.frequency
+            ) or default_max_frequency
+            if beep_settings and beep_settings.frequency
+            else default_beep_frequency
+        )
+
+        preparation_time = wait_time * frequency
         wait_time -= preparation_time
-        preparation_time /= 3.0
+        preparation_time /= float(quantity)
 
         mouse.sleep(wait_time)
-        Sound.play_alert()
 
-        mouse.sleep(preparation_time)
-        Sound.play_alert()
+        for i in range(quantity):
+            Sound.play_alert()
+            mouse.sleep(preparation_time)
 
-        mouse.sleep(preparation_time)
-        Sound.play_alert()
-
-        mouse.sleep(preparation_time)
         position = mouse.position()
         print(position)
         Sound.play_alert(LaunchOperationTypes.SUCCESS)

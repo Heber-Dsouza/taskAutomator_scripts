@@ -1,7 +1,7 @@
 from enum import Enum
 from classes.core.keyboard import Keyboard
 from classes.operating_system.shortcut import Shortcut
-from models.detailed_delays import DetailedDelays
+from models.IN.detailed_delays import DetailedDelays
 
 class LaunchOperationTypes(Enum):
     NORMAL = "NORMAL"
