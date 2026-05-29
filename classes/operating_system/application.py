@@ -1,7 +1,6 @@
 import uuid
 from classes.operating_system.gnome import Gnome
 from classes.operating_system.shortcut import Shortcut
-from classes.core.window import Window
 
 class Application(Gnome):
 
@@ -19,7 +18,7 @@ class Application(Gnome):
             self.open()
         else:
             self._launch(self.global_id)
-            window_id = Window.get_active_window_id()
+            window_id = self._get_active_window_id()
             self.running_stack.insert(0, window_id)
 
     def is_active_window(self) -> bool:
@@ -34,9 +33,8 @@ class Application(Gnome):
     def close(self):
         if self.is_running() and not self.is_active_window():
             self.__relocate_to_active()
-        self._remove_app_from_stack(self.global_id)
-        self.running_stack.remove(self.id)
-        Window.close_active_window_by_id(self.id)
+        self.__remove_app_from_stack()
+        self._close_active_window_by_id(self.id)
 
 
     def is_running(self) -> bool:
@@ -48,3 +46,7 @@ class Application(Gnome):
         if current_item_index > 0:
             Shortcut.lx_cycle_app_windows(current_item_index, 2)
             self.running_stack.insert(0, self.running_stack.pop(current_item_index))
+
+    def __remove_app_from_stack(self):
+        self._remove_app_from_global_stack(self.global_id)
+        self.running_stack.remove(self.id)

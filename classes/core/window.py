@@ -1,16 +1,16 @@
+from abc import ABC
 from ewmh.ewmh import EWMH
 
-class Window:
-    __window_instance = EWMH()
+class Window(ABC):
 
-    @staticmethod
-    def get_active_window_properties():
-        return Window.__window_instance.getActiveWindow()
+    def __init__(self):
+        self.__win_manager = EWMH()
 
-    @staticmethod
-    def get_active_window_id():
-        return Window.__window_instance.getActiveWindow().id
+    def _get_active_window_properties(self):
+        return self.__win_manager.getActiveWindow()
 
-    @staticmethod
-    def close_active_window_by_id(window_id:str):
-        return Window.__window_instance.setCloseWindow(window_id)
+    def _get_active_window_id(self):
+        return self.__win_manager.getActiveWindow().id
+
+    def _close_active_window_by_id(self, window_id:str):
+        return self.__win_manager.setCloseWindow(window_id)

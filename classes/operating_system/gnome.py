@@ -1,11 +1,13 @@
 from classes.operating_system.shortcut import Shortcut
 from classes.operating_system.terminal import Terminal
+from classes.core.window import Window
 from models.IN.detailed_delays import DetailedDelays
 
-class Gnome:
+class Gnome(Window):
     global_running_stack: list[str] = []
 
     def __init__(self, launch_command:str):
+        super().__init__()
         self.launch_command:str = launch_command
 
     def _launch(self, global_id):
@@ -37,5 +39,5 @@ class Gnome:
             Shortcut.lx_cycle_windows(current_index, 2)
             self.global_running_stack.insert(0, self.global_running_stack.pop(current_index))
 
-    def _remove_app_from_stack(self, global_id:str):
+    def _remove_app_from_global_stack(self, global_id:str):
         self.global_running_stack.remove(global_id)
