@@ -1,5 +1,7 @@
+import time
 from abc import ABC
 from ewmh.ewmh import EWMH
+from typing import Final
 
 class Window(ABC):
 
@@ -12,5 +14,8 @@ class Window(ABC):
     def _get_active_window_id(self):
         return self.__win_manager.getActiveWindow().id
 
-    def _close_active_window_by_id(self, window_id:str):
-        return self.__win_manager.setCloseWindow(window_id)
+    def _close_active_window_by_id(self, window_id:str, delay:float|int|None):
+        default_delay_time:Final = 1.0
+        time.sleep(delay or default_delay_time)
+        self.__win_manager.setCloseWindow(window_id)
+        self.__win_manager.display.flush()

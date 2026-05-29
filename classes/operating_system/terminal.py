@@ -1,3 +1,4 @@
+import time
 from enum import Enum
 from classes.core.keyboard import Keyboard
 from classes.operating_system.shortcut import Shortcut
@@ -40,6 +41,10 @@ class Terminal:
                 LaunchOperationTypes.NOHUP
             ), getattr(detailed_delays, "delay_typing", delay or 0))
             Keyboard.confirm(getattr(detailed_delays, "delay_confirm", delay or 0))
+
+            # This delay is important to allow the application
+            # to open before another routine retrieves the active window ID.
+            time.sleep(getattr(detailed_delays, "post_wait_delay", delay or 0))
             return True
         except Exception as error:
             print(error)

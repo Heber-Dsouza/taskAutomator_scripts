@@ -7,5 +7,5 @@ class Calculator(Application):
 
     def sum(self, x:int, y:int):
         self.open()
-        Keyboard.type(f"{x}+{y}", 2)
+        Keyboard.type(f"{x}+{y}", 1)
         Keyboard.confirm()

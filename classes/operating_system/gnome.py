@@ -10,14 +10,20 @@ class Gnome(Window):
         super().__init__()
         self.launch_command:str = launch_command
 
-    def _launch(self, global_id):
+    def _launch(self, global_id, post_wait_delay:float|int=0):
 
         if self._is_running_global(global_id):
             self._active_global(global_id)
         else:
             Terminal.quick_launch(
                 self.launch_command,
-                detailed_delays=DetailedDelays(delay_terminal=1, delay_typing=1, delay_confirm=0))
+                detailed_delays=DetailedDelays(
+                    delay_terminal=1,
+                    delay_typing=1,
+                    delay_confirm=0,
+                    post_wait_delay=post_wait_delay
+                )
+            )
             self.global_running_stack.insert(0, global_id)
 
     def _active_global(self, global_id:str):

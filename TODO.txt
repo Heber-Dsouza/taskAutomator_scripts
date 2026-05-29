@@ -2,3 +2,5 @@
 [x] método close()
     [ ] teste
 [ ] create new workspace
+[ ] turn off CAPS LOCK
+[ ] documentar models.IN.detailed_delays

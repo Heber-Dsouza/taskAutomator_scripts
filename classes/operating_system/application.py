@@ -10,31 +10,33 @@ class Application(Gnome):
 
     def __init__(self, launch_command:str):
         super().__init__(launch_command)
-        self.id=None
+        self.id=str(uuid.uuid4())
 
-    def run(self):
+    def run(self, post_wait_delay:float|int=1):
 
         if self.is_running():
             self.open()
         else:
-            self._launch(self.global_id)
+            self._launch(self.global_id, post_wait_delay)
+
             window_id = self._get_active_window_id()
+            self.id = window_id
             self.running_stack.insert(0, window_id)
 
     def is_active_window(self) -> bool:
         return self._is_active_window_global(self.global_id) and self.id in self.running_stack and self.running_stack[0] == self.id
 
-    def open(self):
+    def open(self, post_wait_delay:float|int=1):
         if not self.is_running():
-            self.run()
+            self.run(post_wait_delay)
         if not self.is_active_window():
             self.__relocate_to_active()
 
-    def close(self):
+    def close(self, delay:float|int|None=None):
         if self.is_running() and not self.is_active_window():
             self.__relocate_to_active()
         self.__remove_app_from_stack()
-        self._close_active_window_by_id(self.id)
+        self._close_active_window_by_id(self.id, delay)
 
 
     def is_running(self) -> bool:
