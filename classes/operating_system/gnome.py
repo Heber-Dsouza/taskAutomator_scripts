@@ -36,3 +36,6 @@ class Gnome:
         if current_index > 0:
             Shortcut.lx_cycle_windows(current_index, 2)
             self.global_running_stack.insert(0, self.global_running_stack.pop(current_index))
+
+    def _remove_app_from_stack(self, global_id:str):
+        self.global_running_stack.remove(global_id)

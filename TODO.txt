@@ -1,0 +1,4 @@
+[x] getActiveWindow
+[x] método close()
+    [ ] teste
+[ ] create new workspace
