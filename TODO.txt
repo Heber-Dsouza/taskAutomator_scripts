@@ -1,6 +1,7 @@
 [x] getActiveWindow
 [x] método close()
-    [ ] teste
+    [x] teste
 [ ] create new workspace
 [ ] turn off CAPS LOCK
-[ ] documentar models.IN.detailed_delays
+[x] documentar models.IN.detailed_delays
+[ ] documentar métodos e rotinas do Application e Gnome
